@@ -12,10 +12,13 @@ import retrofit2.converter.jackson.JacksonConverterFactory
 
 @Configuration
 class SpringConfig(
-    private val httpTracing: HttpTracing
+    private val httpTracing: HttpTracing,
 ) {
     @Bean
-    fun cardRestClient(objectMapper: ObjectMapper, okHttpClient: OkHttpClient): CardRestClient = Retrofit
+    fun cardRestClient(
+        objectMapper: ObjectMapper,
+        okHttpClient: OkHttpClient
+    ): CardRestClient = Retrofit
         .Builder()
         .callFactory(TracingCallFactory.create(httpTracing, okHttpClient))
         .baseUrl("http://localhost:8082")
