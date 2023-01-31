@@ -18,6 +18,7 @@ class CardController(
     @GetMapping("/cards")
     suspend fun findCards(): CardResponseDto = coroutineScope {
         logger.info { "card controller start" }
+        // coroutines need context element to show tracing fields in logs
         val asContextElement = tracer.asContextElement()
         val cardDeferred = async(asContextElement) {
             cardService.findCards()

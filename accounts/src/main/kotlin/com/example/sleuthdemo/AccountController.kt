@@ -18,6 +18,7 @@ class AccountController(
     @GetMapping("/account/{accountId}")
     suspend fun findAccounts(@PathVariable accountId: String): AccountResponseDto = coroutineScope {
         logger.info { "account controller start" }
+        // coroutines need context element to show tracing fields in logs
         val asContextElement = tracer.asContextElement()
         val accountsDeferred = async(asContextElement) {
             accountService.findAccountCards(accountId)

@@ -15,6 +15,14 @@ class SpringConfig(
     private val httpTracing: HttpTracing,
 ) {
     @Bean
+    fun okHttpClient(): OkHttpClient = OkHttpClient()
+
+    @Bean
+    fun objectMapper(): ObjectMapper {
+        return jacksonObjectMapper()
+    }
+
+    @Bean
     fun cardRestClient(
         objectMapper: ObjectMapper,
         okHttpClient: OkHttpClient
@@ -25,12 +33,4 @@ class SpringConfig(
         .addConverterFactory(JacksonConverterFactory.create(objectMapper))
         .build()
         .create(CardRestClient::class.java)
-
-    @Bean
-    fun okHttpClient(): OkHttpClient = OkHttpClient()
-
-    @Bean
-    fun objectMapper(): ObjectMapper {
-        return jacksonObjectMapper()
-    }
 }
